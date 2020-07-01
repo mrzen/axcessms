@@ -3,6 +3,7 @@ package axcessms
 import (
 	"context"
 	"net/http"
+	"os"
 	"testing"
 )
 
@@ -14,7 +15,7 @@ func getTestClient(t *testing.T) *Client {
 
 	c := New(context.TODO(), demoToken)
 	c.SetTestMode(true)
-	// c.DebugWriter = os.Stdout
+	c.DebugWriter = os.Stdout
 
 	return c
 }

@@ -75,22 +75,28 @@ func (c *Client) Do(ctx context.Context, req *http.Request) (*http.Response, err
 	return ctxhttp.Do(ctx, c.conn, req)
 }
 
-// PostForm posts the given request body as a WWW-Form to the given path, and decodes a JSON response
+// Run sends the given request body as a WWW-Form to the given path, and decodes a JSON response
 // into the given interface, returning any error
-func (c *Client) PostForm(ctx context.Context, path string, body, into interface{}) error {
+func (c *Client) Run(ctx context.Context, method, path string, body, into interface{}) error {
 
-	params := make(url.Values)
+	var reader io.ReadCloser
 
-	if err := schema.NewEncoder().Encode(body, params); err != nil {
-		return err
+	if body != nil {
+		params := make(url.Values)
+
+		if err := schema.NewEncoder().Encode(body, params); err != nil {
+			return err
+		}
+
+		reader = ioutil.NopCloser(bytes.NewBufferString(params.Encode()))
 	}
 
-	reader := ioutil.NopCloser(bytes.NewBufferString(params.Encode()))
-
-	req, err := http.NewRequest(http.MethodPost, c.getEndpoint()+path, reader)
-
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	req, err := http.NewRequest(method, c.getEndpoint()+path, reader)
 	req.Header.Set("Accept", "application/json")
+
+	if body != nil {
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	}
 
 	resp, err := c.Do(ctx, req)
 

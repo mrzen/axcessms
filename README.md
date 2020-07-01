@@ -1,12 +1,10 @@
-Axcessms
-========
+Axcessms ![Tests](https://github.com/mrzen/axcessms/workflows/Go/badge.svg)
+=============
 
 API Client library for [Axcessms](https://axcessms.com/) payment gateway.
 
-
-
 Usage
-=====
+-----
 
 ````go
 import "fmt"
