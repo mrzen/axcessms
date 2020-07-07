@@ -6,7 +6,6 @@ import (
 )
 
 func TestCreateCheckout(t *testing.T) {
-	t.Parallel()
 
 	client := getTestClient(t)
 
@@ -28,7 +27,6 @@ func TestCreateCheckout(t *testing.T) {
 }
 
 func TestGetCheckout(t *testing.T) {
-	t.Parallel()
 
 	client := getTestClient(t)
 
@@ -39,6 +37,21 @@ func TestGetCheckout(t *testing.T) {
 		Amount:              6969,
 		PaymentType:         PaymentTypeDebit,
 		TransactionCategory: TransactionCategoryECommerce,
+		Customer: &Customer{
+			ID:          "TEST",
+			FirstName:   "John",
+			MiddleNames: "James",
+			LastName:    "Smith",
+			Browser: &UserAgent{
+				IsJavaEnabled: false,
+				ScreenWidth:   640,
+				ScreenHeight:  480,
+				Accept:        "application/json",
+				UserAgent:     "go/1.14 +testUA",
+				Language:      "en-US",
+				UTCOffset:     1440,
+			},
+		},
 	}
 
 	cko, err := client.CreateCheckout(context.TODO(), req)

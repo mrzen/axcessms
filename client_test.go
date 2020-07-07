@@ -21,7 +21,6 @@ func getTestClient(t *testing.T) *Client {
 }
 
 func TestClientDo(t *testing.T) {
-	t.Parallel()
 
 	c := getTestClient(t)
 

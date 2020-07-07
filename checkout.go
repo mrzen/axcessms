@@ -60,6 +60,8 @@ type CreateCheckoutRequest struct {
 	Currency            string              `schema:"currency"`
 	PaymentType         PaymentType         `schema:"paymentType"`
 	TransactionCategory TransactionCategory `schema:"transactionCategory"`
+	Customer            *Customer           `schema:"customer,omitempty"`
+	BillingAddress      *BillingAddress     `schema:"billing,omitempty"`
 }
 
 // Checkout represents the data for a checkout creation request
@@ -85,6 +87,38 @@ type Payment struct {
 	} `json:"risk"`
 
 	Custom map[string]string `json:"customParameters"`
+}
+
+// Customer represents data known about the customer
+type Customer struct {
+	ID          string     `schema:"customer.merchantCustomerId"`
+	FirstName   string     `schema:"customer.givenName"`
+	MiddleNames string     `schema:"customer.middleName"`
+	LastName    string     `schema:"customer.surname"`
+	Browser     *UserAgent `schema:"customer.browser"`
+}
+
+// UserAgent represents confuration and identification information about the customer's user agent
+type UserAgent struct {
+	Accept        string `schema:"customer.browser.acceptHeader"`
+	Language      string `schema:"customer.browser.language"`
+	ScreenHeight  uint   `schema:"customer.browser.screenHeight"`
+	ScreenWidth   uint   `schema:"customer.browser.screenWidth"`
+	UTCOffset     int    `schema:"customer.browser.timezone"`
+	UserAgent     string `schema:"customer.browser.userAgent"`
+	IsJavaEnabled bool   `schema:"customer.browser.javaEnabled"`
+}
+
+// BillingAddress represents the content of the customer's billing address. Used for AVS.
+type BillingAddress struct {
+	Street1      string  `schema:"billing.street1"`
+	Street2      *string `schema:"billing.street2,omitempty"`
+	HouseNumber1 *string `schema:"billing.houseNumber1,omitempty"`
+	HouseNumber2 *string `schema:"billing.houseNumber2,omitempty"`
+	City         string  `schema:"billing.city"`
+	State        *string `schema:"billing.state,omitempty"`
+	PostalCode   string  `schema:"billing.postcode,omitempty"`
+	CountryCode  string  `schema:"billing.country"`
 }
 
 // CreateCheckout creates a new Checkout
