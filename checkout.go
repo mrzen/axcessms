@@ -91,22 +91,22 @@ type Payment struct {
 
 // Customer represents data known about the customer
 type Customer struct {
-	ID          string     `schema:"customer.merchantCustomerId"`
-	FirstName   string     `schema:"customer.givenName"`
-	MiddleNames string     `schema:"customer.middleName"`
-	LastName    string     `schema:"customer.surname"`
-	Browser     *UserAgent `schema:"customer.browser"`
+	ID          string     `schema:"customer.merchantCustomerId" json:"id"`
+	FirstName   string     `schema:"customer.givenName" json:"first_name"`
+	MiddleNames string     `schema:"customer.middleName" json:"middle_names"`
+	LastName    string     `schema:"customer.surname" json:"last_name"`
+	Browser     *UserAgent `schema:"customer.browser" json:"browser"`
 }
 
 // UserAgent represents confuration and identification information about the customer's user agent
 type UserAgent struct {
-	Accept        string `schema:"customer.browser.acceptHeader"`
-	Language      string `schema:"customer.browser.language"`
-	ScreenHeight  uint   `schema:"customer.browser.screenHeight"`
-	ScreenWidth   uint   `schema:"customer.browser.screenWidth"`
-	UTCOffset     int    `schema:"customer.browser.timezone"`
-	UserAgent     string `schema:"customer.browser.userAgent"`
-	IsJavaEnabled bool   `schema:"customer.browser.javaEnabled"`
+	Accept        string `schema:"customer.browser.acceptHeader" json:"accept"`
+	Language      string `schema:"customer.browser.language" json:"language"`
+	ScreenHeight  uint   `schema:"customer.browser.screenHeight" json:"screen_height"`
+	ScreenWidth   uint   `schema:"customer.browser.screenWidth" json:"screen_width"`
+	UTCOffset     int    `schema:"customer.browser.timezone" json:"utc_offset"`
+	UserAgent     string `schema:"customer.browser.userAgent" json:"user_agent"`
+	IsJavaEnabled bool   `schema:"customer.browser.javaEnabled" json:"java_enabled"`
 }
 
 // BillingAddress represents the content of the customer's billing address. Used for AVS.
