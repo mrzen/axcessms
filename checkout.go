@@ -72,6 +72,19 @@ type Checkout struct {
 // Payment represents the data for a checkout show request
 type Payment struct {
 	APIResponse
+
+	ID           string      `json:"id"`
+	PaymentType  PaymentType `json:"paymentType"`
+	PaymentBrand string      `json:"paymentBrand"`
+	Amount       float64     `json:"amount,string"`
+	Currency     string      `json:"currency"`
+	Descriptor   string      `json:"descriptor"`
+
+	Risk struct {
+		Score uint `json:"score,string"`
+	} `json:"risk"`
+
+	Custom map[string]string `json:"customParameters"`
 }
 
 // CreateCheckout creates a new Checkout
