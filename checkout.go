@@ -111,14 +111,14 @@ type UserAgent struct {
 
 // BillingAddress represents the content of the customer's billing address. Used for AVS.
 type BillingAddress struct {
-	Street1      string  `schema:"billing.street1"`
-	Street2      *string `schema:"billing.street2,omitempty"`
-	HouseNumber1 *string `schema:"billing.houseNumber1,omitempty"`
-	HouseNumber2 *string `schema:"billing.houseNumber2,omitempty"`
-	City         string  `schema:"billing.city"`
-	State        *string `schema:"billing.state,omitempty"`
-	PostalCode   string  `schema:"billing.postcode,omitempty"`
-	CountryCode  string  `schema:"billing.country"`
+	Street1      string  `schema:"billing.street1" json:"line_1"`
+	Street2      *string `schema:"billing.street2,omitempty" json:"line_2"`
+	HouseNumber1 *string `schema:"billing.houseNumber1,omitempty" json:"house_number_1"`
+	HouseNumber2 *string `schema:"billing.houseNumber2,omitempty" json:"house_number_2"`
+	City         string  `schema:"billing.city" json:"city"`
+	State        *string `schema:"billing.state,omitempty" json:"state"`
+	PostalCode   string  `schema:"billing.postcode,omitempty" json:"postal_code"`
+	CountryCode  string  `schema:"billing.country" json:"country"`
 }
 
 // CreateCheckout creates a new Checkout
