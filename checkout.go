@@ -56,6 +56,7 @@ const (
 // CreateCheckoutRequest represents the parameters for creating a checkout
 type CreateCheckoutRequest struct {
 	EntityID            string              `schema:"entityId"`
+	MerchantID          string              `schema:"merchantTransactionId"`
 	Amount              int                 `schema:"amount"`
 	Currency            string              `schema:"currency"`
 	PaymentType         PaymentType         `schema:"paymentType"`
@@ -91,11 +92,13 @@ type Payment struct {
 
 // Customer represents data known about the customer
 type Customer struct {
-	ID          string     `schema:"customer.merchantCustomerId" json:"id"`
-	FirstName   string     `schema:"customer.givenName" json:"first_name"`
-	MiddleNames string     `schema:"customer.middleName" json:"middle_names"`
-	LastName    string     `schema:"customer.surname" json:"last_name"`
-	Browser     *UserAgent `schema:"customer.browser" json:"browser"`
+	ID           string     `schema:"customer.merchantCustomerId" json:"id"`
+	FirstName    string     `schema:"customer.givenName" json:"first_name"`
+	MiddleNames  string     `schema:"customer.middleName" json:"middle_names"`
+	LastName     string     `schema:"customer.surname" json:"last_name"`
+	EmailAddress string     `schema:"customer.email" json:"email"`
+	IPAddress    *string    `schema:"customer.ip,omitempty" json:"ip_address"`
+	Browser      *UserAgent `schema:"customer.browser" json:"browser"`
 }
 
 // UserAgent represents confuration and identification information about the customer's user agent
