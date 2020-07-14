@@ -11,8 +11,6 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/gorilla/schema"
-
 	"golang.org/x/net/context/ctxhttp"
 )
 
@@ -75,20 +73,19 @@ func (c *Client) Do(ctx context.Context, req *http.Request) (*http.Response, err
 	return ctxhttp.Do(ctx, c.conn, req)
 }
 
+// URLEncodable is a type which is URL Encodable
+type URLEncodable interface {
+	URLEncode() url.Values
+}
+
 // Run sends the given request body as a WWW-Form to the given path, and decodes a JSON response
 // into the given interface, returning any error
-func (c *Client) Run(ctx context.Context, method, path string, body, into interface{}) error {
+func (c *Client) Run(ctx context.Context, method, path string, body URLEncodable, into interface{}) error {
 
 	var reader io.ReadCloser
 
 	if body != nil {
-		params := make(url.Values)
-
-		if err := schema.NewEncoder().Encode(body, params); err != nil {
-			return err
-		}
-
-		reader = ioutil.NopCloser(bytes.NewBufferString(params.Encode()))
+		reader = ioutil.NopCloser(bytes.NewBufferString(body.URLEncode().Encode()))
 	}
 
 	req, err := http.NewRequest(method, c.getEndpoint()+path, reader)

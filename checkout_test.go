@@ -37,6 +37,9 @@ func TestGetCheckout(t *testing.T) {
 		Amount:              6969,
 		PaymentType:         PaymentTypeDebit,
 		TransactionCategory: TransactionCategoryECommerce,
+		CustomParameters: &CustomParameters{
+			"customFieldName": "customFieldValue",
+		},
 		Customer: &Customer{
 			ID:          "TEST",
 			FirstName:   "John",
