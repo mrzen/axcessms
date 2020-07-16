@@ -205,7 +205,7 @@ func (r CreateCheckoutRequest) URLEncode() url.Values {
 	if b := r.BillingAddress; b != nil {
 		values.Set("billing.street1", b.Street1)
 		values.Set("billing.city", b.City)
-		values.Set("postcode", b.PostalCode)
+		values.Set("billing.postcode", b.PostalCode)
 		values.Set("billing.country", b.CountryCode)
 
 		if b.Street2 != nil {
