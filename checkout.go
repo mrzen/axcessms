@@ -71,7 +71,7 @@ type CustomParameters map[string]string
 type CreateCheckoutRequest struct {
 	EntityID            string
 	MerchantID          string
-	Amount              int
+	Amount              float64
 	Currency            string
 	PaymentType         PaymentType
 	TransactionCategory TransactionCategory
@@ -175,7 +175,7 @@ func (r CreateCheckoutRequest) URLEncode() url.Values {
 
 	values.Set("entityId", r.EntityID)
 	values.Set("merchantTransactionId", r.MerchantID)
-	values.Set("amount", strconv.FormatInt(int64(r.Amount), 10))
+	values.Set("amount", strconv.FormatFloat(r.Amount, 'f', 2, 64))
 	values.Set("currency", r.Currency)
 	values.Set("paymentType", string(r.PaymentType))
 	values.Set("transactionCategory", string(r.TransactionCategory))
