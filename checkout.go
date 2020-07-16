@@ -75,7 +75,7 @@ type CreateCheckoutRequest struct {
 	Currency            string
 	PaymentType         PaymentType
 	TransactionCategory TransactionCategory
-	IntegrationMode     IntegrationMode
+	IntegrationMode     *IntegrationMode
 	Customer            *Customer
 	BillingAddress      *BillingAddress
 	CustomParameters    *CustomParameters
@@ -176,9 +176,13 @@ func (r CreateCheckoutRequest) URLEncode() url.Values {
 	values.Set("entityId", r.EntityID)
 	values.Set("merchantTransactionId", r.MerchantID)
 	values.Set("amount", strconv.FormatInt(int64(r.Amount), 10))
+	values.Set("currency", r.Currency)
 	values.Set("paymentType", string(r.PaymentType))
 	values.Set("transactionCategory", string(r.TransactionCategory))
-	values.Set("testMode", string(r.IntegrationMode))
+
+	if r.IntegrationMode != nil {
+		values.Set("testMode", string(*r.IntegrationMode))
+	}
 
 	if r.Customer != nil {
 		values.Set("customer.merchantCustomerId", r.Customer.ID)
