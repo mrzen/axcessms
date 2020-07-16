@@ -30,7 +30,7 @@ const (
 	TestHost = "https://test.oppwa.com"
 
 	// LiveHost is the base API URL to be used for live-mode interactions
-	LiveHost = ""
+	LiveHost = "https://oppwa.com"
 )
 
 // New creates a new client
