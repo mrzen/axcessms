@@ -14,6 +14,9 @@ type PaymentType string
 // TransactionCategory is an enum representing the different types of transaction
 type TransactionCategory string
 
+// IntegrationMode is an enum representing the integration modes
+type IntegrationMode string
+
 const (
 	// PaymentTypePreAuthorization is the payment type to pre-authorize a future payment
 	PaymentTypePreAuthorization PaymentType = "PA"
@@ -53,6 +56,12 @@ const (
 
 	// TransactionCategoryMobilePointOfSale is the transaction category for a payment made at a mobile point-of-sale
 	TransactionCategoryMobilePointOfSale TransactionCategory = "PM"
+
+	// IntegrationModeInternal represents internal gateway simulations
+	IntegrationModeInternal IntegrationMode = "INTERNAL"
+
+	// IntegrationModeExternal represents external production gateways
+	IntegrationModeExternal IntegrationMode = "EXTERNAL"
 )
 
 // CustomParameters is a key/value map of strings
@@ -66,6 +75,7 @@ type CreateCheckoutRequest struct {
 	Currency            string
 	PaymentType         PaymentType
 	TransactionCategory TransactionCategory
+	IntegrationMode     IntegrationMode
 	Customer            *Customer
 	BillingAddress      *BillingAddress
 	CustomParameters    *CustomParameters
@@ -168,6 +178,7 @@ func (r CreateCheckoutRequest) URLEncode() url.Values {
 	values.Set("amount", strconv.FormatInt(int64(r.Amount), 10))
 	values.Set("paymentType", string(r.PaymentType))
 	values.Set("transactionCategory", string(r.TransactionCategory))
+	values.Set("testMode", string(r.IntegrationMode))
 
 	if r.Customer != nil {
 		values.Set("customer.merchantCustomerId", r.Customer.ID)
